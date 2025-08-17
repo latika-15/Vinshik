@@ -210,3 +210,47 @@
     </div>
 </body>
 </html>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Select all chart containers
+  const charts = document.querySelectorAll(".stat-chart");
+
+  charts.forEach(chart => {
+    const svg = chart.querySelector("svg");
+    svg.innerHTML = ""; // clear old polyline
+
+    // Example random data (10 bars between 0-30)
+    let data = Array.from({ length: 10 }, () => Math.floor(Math.random() * 30));
+
+    // Chart dimensions
+    const svgWidth = 100;
+    const svgHeight = 30;
+    const barWidth = svgWidth / data.length;
+
+    data.forEach((value, index) => {
+      let barHeight = value;
+      let x = index * barWidth + 2; // +2 for spacing
+      let y = svgHeight - barHeight;
+
+      // Create a rect bar
+      let rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      rect.setAttribute("x", x);
+      rect.setAttribute("y", y);
+      rect.setAttribute("width", barWidth - 4);
+      rect.setAttribute("height", barHeight);
+      rect.setAttribute("fill", "#4cafef");
+
+      // Animate growth
+      rect.style.transition = "height 0.6s ease, y 0.6s ease";
+      rect.setAttribute("height", 0);
+      rect.setAttribute("y", svgHeight);
+      setTimeout(() => {
+        rect.setAttribute("height", barHeight);
+        rect.setAttribute("y", y);
+      }, 100);
+
+      svg.appendChild(rect);
+    });
+  });
+});
+</script>

@@ -15,6 +15,6 @@ A sleek, dark-themed admin-style dashboard interface with sidebar navigation and
   - User profile display
 - *Info cards layout* featuring:
   - Active Projects, In Progress, Completed, New Prospects
-  - Trend indicators (+/-) and mini inline SVG sparkline visuals
+  - Trend indicators (+/-)
 
 ---
