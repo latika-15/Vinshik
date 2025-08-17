@@ -100,7 +100,7 @@
                 <div class="stat-card primary">
                     <div class="stat-header">
                         <div class="stat-meta">
-                            <span class="stat-title">Active Projects</span>
+                            <span class="stat-title">Active Jobs</span>
                             <div class="stat-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                     <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
@@ -126,7 +126,7 @@
                 <div class="stat-card warning">
                     <div class="stat-header">
                         <div class="stat-meta">
-                            <span class="stat-title">In Progress</span>
+                            <span class="stat-title">Jobs In Progress</span>
                             <div class="stat-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                     <circle cx="12" cy="12" r="10"/>
@@ -153,7 +153,7 @@
                 <div class="stat-card success">
                     <div class="stat-header">
                         <div class="stat-meta">
-                            <span class="stat-title">Completed</span>
+                            <span class="stat-title">Finished Jobs</span>
                             <div class="stat-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
@@ -180,7 +180,7 @@
                 <div class="stat-card info">
                     <div class="stat-header">
                         <div class="stat-meta">
-                            <span class="stat-title">New Prospects</span>
+                            <span class="stat-title">New Leads</span>
                             <div class="stat-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                     <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/>
@@ -212,15 +212,17 @@
 </html>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  // Select all chart containers
   const charts = document.querySelectorAll(".stat-chart");
+
+  // Define a color palette
+  const colors = ["#4cafef", "#ff9800", "#8bc34a", "#e91e63", "#9c27b0", "#03a9f4", "#ffc107", "#009688", "#f44336", "#673ab7"];
 
   charts.forEach(chart => {
     const svg = chart.querySelector("svg");
     svg.innerHTML = ""; // clear old polyline
 
-    // Example random data (10 bars between 0-30)
-    let data = Array.from({ length: 10 }, () => Math.floor(Math.random() * 30));
+    // Example random data (10 bars between 5–28)
+    let data = Array.from({ length: 10 }, () => Math.floor(Math.random() * 25) + 5);
 
     // Chart dimensions
     const svgWidth = 100;
@@ -229,16 +231,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     data.forEach((value, index) => {
       let barHeight = value;
-      let x = index * barWidth + 2; // +2 for spacing
+      let x = index * barWidth + 2; // bar spacing
       let y = svgHeight - barHeight;
 
-      // Create a rect bar
+      // Create bar rect
       let rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
       rect.setAttribute("x", x);
       rect.setAttribute("y", y);
       rect.setAttribute("width", barWidth - 4);
       rect.setAttribute("height", barHeight);
-      rect.setAttribute("fill", "#4cafef");
+
+      // Give each bar a different color from palette
+      rect.setAttribute("fill", colors[index % colors.length]);
 
       // Animate growth
       rect.style.transition = "height 0.6s ease, y 0.6s ease";
@@ -247,10 +251,11 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         rect.setAttribute("height", barHeight);
         rect.setAttribute("y", y);
-      }, 100);
+      }, 100 * index); // stagger animation
 
       svg.appendChild(rect);
     });
   });
 });
 </script>
+
